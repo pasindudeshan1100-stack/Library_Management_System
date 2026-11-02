@@ -1,37 +1,39 @@
 package Controllers.Books;
 
+import Scene.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 public class BookHistoryPageController {
 
-    @FXML
-    void Booksbtn2OnAction(ActionEvent event) {
+
+
+    public void DashboardbtnOnAction(ActionEvent actionEvent) {
+        SceneManager.switchPage("/view/Dashboard/home.fxml");
 
     }
 
-    @FXML
-    void Dashboardbtn2OnAction(ActionEvent event) {
+    public void BooksbtnOnAction(ActionEvent actionEvent) {
+        SceneManager.switchPage("/view/Books/book_page.fxml");
 
     }
 
-    @FXML
-    void Historbtn2OnAction(ActionEvent event) {
+    public void MemberbtnOnAction(ActionEvent actionEvent) {
+        SceneManager.switchPage("/view/Members/member_page.fxml");
 
     }
 
-    @FXML
-    void Issuebtn2OnAction(ActionEvent event) {
+    public void IssuebtnOnAction(ActionEvent actionEvent) {
+        SceneManager.switchPage("/view/Books/issue_book_page.fxml");
 
     }
 
-    @FXML
-    void Memberbtn2OnAction(ActionEvent event) {
+    public void ReturnbtnOnAction(ActionEvent actionEvent) {
+        SceneManager.switchPage("/view/Books/return_book_page.fxml");
 
     }
 
-    @FXML
-    void Returnbtn2OnAction(ActionEvent event) {
+    public void HistorybtnOnAction(ActionEvent actionEvent) {
+        SceneManager.switchPage("/view/Books/book_history_page.fxml");
 
     }
-
 }

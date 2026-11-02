@@ -1,6 +1,6 @@
 package Controllers.Members;
 
-import Model.Member;
+import Model.MemberDTO;
 import db.DBConnection;
 
 import java.sql.Connection;
@@ -31,14 +31,14 @@ public class AddMemberController {
 
     }
 
-    public List<Member> getAllMembers(){
-        List<Member> members=new ArrayList<>();
+    public List<MemberDTO> getAllMembers(){
+        List<MemberDTO> members=new ArrayList<>();
         String sql="SELECT * FROM members;";
         try {
            PreparedStatement preparedStatement= connection.prepareStatement(sql);
            ResultSet resultSet=preparedStatement.executeQuery();
            while (resultSet.next()){
-              Member member=new Member(
+              MemberDTO member=new MemberDTO(
                       resultSet.getString("member_id"),
                       resultSet.getNString("full_name"),
                       resultSet.getString("email"),
