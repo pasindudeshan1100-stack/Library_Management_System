@@ -3,8 +3,18 @@ package Controllers.Books;
 
 import Scene.SceneManager;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 
 public class IssueBookPageController {
+
+    public TextField txtMemberId;
+    public TextField txtBookId;
+    public DatePicker dpIssueDate;
+    public DatePicker dpDueDate;
+    public Button btnReset;
+    public Button btnIssueBook;
 
     public void DashboardbtnOnAction(ActionEvent actionEvent) {
         SceneManager.switchPage("/view/Dashboard/home.fxml");

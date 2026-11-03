@@ -5,8 +5,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -63,16 +61,16 @@
                         <ColumnConstraints percentWidth="50" />
                     </columnConstraints>
 
-                    <Label styleClass="form-label" text="Issue ID" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <TextField fx:id="txtIssueId" promptText="Enter issue ID" styleClass="form-field" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label styleClass="form-label" text="Member ID" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtMemberId" promptText="Enter issue ID" styleClass="form-field" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-                    <Label styleClass="form-label" text="Member ID" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                    <TextField fx:id="txtMemberId" promptText="Enter member ID" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label styleClass="form-label" text="Book ID" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtBookId" promptText="Enter member ID" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                    <Label styleClass="form-label" text="Book ID" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <Label styleClass="form-label" text="Book Title" GridPane.columnIndex="0" GridPane.rowIndex="2">
                         <GridPane.margin><Insets top="12" /></GridPane.margin>
                     </Label>
-                    <TextField fx:id="txtBookId" promptText="Enter book ID" styleClass="form-field" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <TextField fx:id="txtBookName" promptText="Enter book ID" styleClass="form-field" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
                     <Label styleClass="form-label" text="Return Date" GridPane.columnIndex="1" GridPane.rowIndex="2">
                         <GridPane.margin><Insets top="12" /></GridPane.margin>
