@@ -1,17 +1,17 @@
 package Model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ReturnBookDTO {
     private String memberId;
     private  String bookId;
     private  String booktitle;
-    private Date returnDate;
+    private LocalDate returnDate;
 
     public ReturnBookDTO() {
     }
 
-    public ReturnBookDTO(String memberId, String bookId, String booktitle, Date returnDate) {
+    public ReturnBookDTO(String memberId, String bookId, String booktitle, LocalDate returnDate) {
         this.memberId = memberId;
         this.bookId = bookId;
         this.booktitle = booktitle;
@@ -42,11 +42,11 @@ public class ReturnBookDTO {
         this.booktitle = booktitle;
     }
 
-    public Date getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 }
