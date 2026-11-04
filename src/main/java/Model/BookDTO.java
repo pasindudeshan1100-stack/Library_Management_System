@@ -19,6 +19,10 @@ public class BookDTO {
         this.quantity = quantity;
     }
 
+    public BookDTO() {
+
+    }
+
     public String getBookid() {
         return bookid;
     }

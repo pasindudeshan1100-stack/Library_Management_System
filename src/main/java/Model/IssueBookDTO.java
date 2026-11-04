@@ -1,13 +1,13 @@
 package Model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class IssueBookDTO {
         private String issueId;
         private String bookId;
         private  String memberId;
-        private Date issueDate;
-        private  Date DueDate;
+        private LocalDate issueDate;
+        private  LocalDate DueDate;
 
 
     public IssueBookDTO(String issueId) {
@@ -17,11 +17,11 @@ public class IssueBookDTO {
     public IssueBookDTO() {
     }
 
-    public IssueBookDTO(String bookId, String memberId, Date issueDate, Date dueDate) {
+    public IssueBookDTO(String bookId, String memberId, LocalDate issueDate, LocalDate dueDate) {
         this.bookId = bookId;
         this.memberId = memberId;
         this.issueDate = issueDate;
-        DueDate = dueDate;
+        this.DueDate = dueDate;
     }
 
     public String getBookId() {
@@ -40,19 +40,19 @@ public class IssueBookDTO {
         this.memberId = memberId;
     }
 
-    public Date getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return DueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         DueDate = dueDate;
     }
     public String getIssueId() {

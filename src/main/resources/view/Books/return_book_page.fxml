@@ -85,8 +85,8 @@
                 </GridPane>
 
                 <HBox alignment="CENTER_RIGHT" spacing="12">
-                    <Button fx:id="btnReset" styleClass="secondary-button" text="Reset" />
-                    <Button fx:id="btnReturnBook" styleClass="return-button" text="✓  Return Book" />
+                    <Button fx:id="btnReset" onAction="#btnResetOnAction" styleClass="secondary-button" text="Reset" />
+                    <Button fx:id="btnReturnBook" onAction="#btnReturnOnAction" styleClass="return-button" text="✓  Return Book" />
                 </HBox>
             </VBox>
 
