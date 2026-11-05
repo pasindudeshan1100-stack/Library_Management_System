@@ -14,6 +14,10 @@ public class BookHistoryDTO {
     public BookHistoryDTO() {
     }
 
+    public BookHistoryDTO(String memberId, String bookId, LocalDate issueDate, LocalDate dueDate, LocalDate returnDate, String status) {
+
+    }
+
     public BookHistoryDTO(String book_id, String member_id, String book_title, LocalDate issue_date, LocalDate due_date, LocalDate return_date, String status) {
         this.book_id = book_id;
         this.member_id = member_id;
