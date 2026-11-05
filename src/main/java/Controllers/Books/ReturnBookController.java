@@ -24,4 +24,17 @@ public class ReturnBookController {
         }
 
     }
+
+    public void updateReturnedBooks(String bookId, String memberId) {
+        String sql="UPDATE issueBooks SET status='RETURNED'WHERE book_id=? AND member_id=? AND status IN ('ISSUED', 'OVERDUE');";
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1,memberId);
+            preparedStatement.setString(2,bookId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

@@ -1,11 +1,26 @@
 package Controllers.Books;
 
+import Model.IssueBookDTO;
+import Model.ReturnBookDTO;
 import Scene.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
+import java.time.LocalDate;
+
 public class BookHistoryPageController {
 
 
+    public TableView historyTable;
+    public TableColumn colMemberId;
+    public TableColumn colBookId;
+    public TableColumn colBookTitle;
+    public TableColumn colIssueDate;
+    public TableColumn colDueDate;
+    public TableColumn colReturnDate;
+    public TableColumn colStatus;
 
     public void DashboardbtnOnAction(ActionEvent actionEvent) {
         SceneManager.switchPage("/view/Dashboard/home.fxml");

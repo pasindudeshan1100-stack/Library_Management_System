@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddBookPageController   {
+public class AddBookPageController  {
 
     AddBookController addBookController= new AddBookController();
 
@@ -197,6 +197,8 @@ public class AddBookPageController   {
       }
      clearFields();
     }
+
+
 
 //    @Override
 //    public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -5,12 +5,16 @@ import Model.BookDTO;
 import Model.IssueBookDTO;
 import Scene.SceneManager;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-public class IssueBookPageController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class IssueBookPageController implements Initializable {
 
     IssueBookController issueBookController=new IssueBookController();
 
@@ -52,11 +56,10 @@ public class IssueBookPageController {
     }
 
     public void btnResetOnAction(ActionEvent actionEvent) {
-        IssueBookDTO issueBookDTO=new IssueBookDTO();
-        issueBookDTO.setBookId(null);
-        issueBookDTO.setMemberId(null);
-        issueBookDTO.setIssueDate(null);
-        issueBookDTO.setDueDate(null);
+       txtBookId.clear();
+       txtMemberId.clear();
+       dpDueDate.setValue(null);
+       dpIssueDate.setValue(null);
 
     }
 
@@ -73,10 +76,15 @@ public class IssueBookPageController {
         }else {
             new Alert(Alert.AlertType.ERROR,"Failed to issue Book").show();
         }
+        txtBookId.clear();
+        txtMemberId.clear();
+        dpDueDate.setValue(null);
+        dpIssueDate.setValue(null);
 
-        issueBookDTO.setBookId(null);
-        issueBookDTO.setMemberId(null);
-        issueBookDTO.setIssueDate(null);
-        issueBookDTO.setDueDate(null);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        issueBookController.updateOverdueBooks();
     }
 }

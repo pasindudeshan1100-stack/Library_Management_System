@@ -4,12 +4,16 @@ package Controllers.Books;
 import Model.ReturnBookDTO;
 import Scene.SceneManager;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-public class ReturnBookPgeController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ReturnBookPgeController implements Initializable {
     ReturnBookController returnBookController=new ReturnBookController();
     public Button btnReset;
     public Button btnReturnBook;
@@ -50,11 +54,10 @@ public class ReturnBookPgeController {
     }
 
     public void btnResetOnAction(ActionEvent actionEvent) {
-        ReturnBookDTO returnBookDTO=new ReturnBookDTO();
-        returnBookDTO.setBookId(null);
-        returnBookDTO.setMemberId(null);
-        returnBookDTO.setBooktitle(null);
-        returnBookDTO.setReturnDate(null);
+        txtBookId.clear();
+        txtBookName.clear();
+        txtMemberId.clear();
+        dpReturnDate.setValue(null);
     }
 
     public void btnReturnOnAction(ActionEvent actionEvent) {
@@ -70,7 +73,14 @@ public class ReturnBookPgeController {
         }else {
             new Alert(Alert.AlertType.ERROR,"Failed to return Book").show();
         }
-        btnResetOnAction(actionEvent);
+        txtBookId.clear();
+        txtBookName.clear();
+        txtMemberId.clear();
+        dpReturnDate.setValue(null);
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        returnBookController.updateReturnedBooks(txtBookId.getText().trim(),txtMemberId.getText().trim());
+    }
 }

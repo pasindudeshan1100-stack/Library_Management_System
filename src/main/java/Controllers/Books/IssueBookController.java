@@ -26,7 +26,16 @@ public class IssueBookController {
     }
 
 
-  }
+    public void updateOverdueBooks() {
+        String sql="UPDATE issueBooks SET status='OVERDUE' WHERE due_date< CURDATE() AND status='ISSUED'; ";
+        try {
+            java.sql.PreparedStatement preparedStatement =connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
 
 
 
