@@ -53,4 +53,32 @@ public class AddMemberController {
         }
         return members;
     }
+
+    public boolean UpdateMember(String name, String email, String adress, String phonenumber) {
+        String sql="UPDATE members SET full_name=?,email=?,phone_number=?,adress=? WHERE member_id=?;" ;
+        try {
+          PreparedStatement preparedStatement=  connection.prepareStatement(sql);
+          preparedStatement.setString(1,name);
+          preparedStatement.setString(2,email);
+          preparedStatement.setString(3,adress);
+          preparedStatement.setString(4,phonenumber);
+
+          return preparedStatement.executeUpdate()>0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteMember(String id) {
+        String sql="DELETE FROM members WHERE member_id=?;";
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1,id);
+            return preparedStatement.executeUpdate()>0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

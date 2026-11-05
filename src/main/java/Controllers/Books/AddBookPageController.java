@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -17,6 +18,8 @@ import java.util.ResourceBundle;
 
 public class AddBookPageController  {
 
+    public Button btnUpdate;
+    public Button btnDelete;
     AddBookController addBookController= new AddBookController();
 
     @FXML

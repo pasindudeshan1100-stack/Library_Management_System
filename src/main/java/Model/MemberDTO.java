@@ -7,8 +7,6 @@ public class MemberDTO {
     private String phonenumber;
     private  String adress;
 
-    public MemberDTO() {
-    }
 
     public MemberDTO(String id, String name, String email, String phonenumber, String adress) {
         this.id = id;
