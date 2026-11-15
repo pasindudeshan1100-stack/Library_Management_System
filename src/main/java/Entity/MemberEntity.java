@@ -1,4 +1,4 @@
 package Entity;
 
-public class member_entity {
+public class MemberEntity {
 }

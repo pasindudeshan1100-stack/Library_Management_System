@@ -1,4 +1,4 @@
 package Entity;
 
-public class bookHistory_entity {
+public class BookHistoryEntity {
 }

@@ -1,4 +1,4 @@
 package Entity;
 
-public class returnBook_entity {
+public class ReturnBookEntity {
 }

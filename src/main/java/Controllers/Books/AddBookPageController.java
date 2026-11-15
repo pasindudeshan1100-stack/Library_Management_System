@@ -1,5 +1,6 @@
 package Controllers.Books;
 
+import Model.BookDTO;
 import db.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,36 +43,33 @@ public class AddBookPageController  {
 
     @FXML
     void addBookOnAction(ActionEvent event) {
-        String title=txtBookTitle.getText();
-        String author= txtAuthor.getText();
-        String category=cmbCategory.getValue();
-        String year=txtPublishedYear.getText();
-        String quantity= txtQuantity.getText();
 
-        if (author.isBlank()
-                || title.isBlank()
-                || category == null
-                || year.isBlank()
-                || quantity.isBlank()) {
+        BookDTO book=new BookDTO();
+        book.setAuthor(txtAuthor.getText().trim());
+        book.setTitle(txtBookTitle.getText().trim());
+        book.setCategory(cmbCategory.getValue());
+
+
+        if (book.getAuthor().isBlank()
+                || book.getTitle().isBlank()
+                || book.getCategory() == null
+                || txtQuantity.getText().trim().isBlank()
+                || txtPublishedYear.getText().trim().isBlank()) {
 
             new Alert(
                     Alert.AlertType.WARNING,
                     "Please fill all fields!"
             ).showAndWait();
 
-            return;
+
         }
         try {
-            int publishedYear = Integer.parseInt(year.trim());
-            int bookQuantity = Integer.parseInt(quantity.trim());
+            book.setYear(Integer.valueOf(txtPublishedYear.getText().trim()));
+            book.setQuantity(Integer.valueOf(txtQuantity.getText().trim()));
 
-            boolean isAdded=addBookController.AddBook(
-                    title.trim(),
-                    author.trim(),
-                    category.trim(),
-                    publishedYear,
-                    bookQuantity
-            );
+            boolean isAdded=addBookController.AddBook(book);
+
+
             if (isAdded){
                 new Alert(Alert.AlertType.INFORMATION,"New Book added Successfully!").show();
 
