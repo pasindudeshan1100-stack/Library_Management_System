@@ -8,7 +8,7 @@ public class BookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookid;
+    private  Integer book_id;
     @Column(name ="book_title",nullable = false,length =150 )
     private  String title;
     @Column(name = "author",nullable = false)
@@ -23,8 +23,8 @@ public class BookEntity {
     public BookEntity() {
     }
 
-    public BookEntity(Long bookid, String title, String author, String category, Integer year, Integer quantity) {
-        this.bookid = bookid;
+    public BookEntity(Integer book_id, String title, String author, String category, Integer year, Integer quantity) {
+        this.book_id = book_id;
         this.title = title;
         this.author = author;
         this.category = category;
@@ -32,12 +32,12 @@ public class BookEntity {
         this.quantity = quantity;
     }
 
-    public Long getBookid() {
-        return bookid;
+    public Integer getBookid() {
+        return book_id;
     }
 
-    public void setBookid(Long bookid) {
-        this.bookid = bookid;
+    public void setBookid(Integer book_id) {
+        this.book_id = book_id;
     }
 
     public String getTitle() {

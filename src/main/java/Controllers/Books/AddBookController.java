@@ -42,7 +42,7 @@ public class AddBookController {
         bookEntity.setAuthor(bookDTO.getAuthor());
         bookEntity.setTitle(bookDTO.getTitle());
         bookEntity.setCategory(bookDTO.getCategory());
-        bookEntity.setYear(bookDTO.getQuantity());
+        bookEntity.setYear(bookDTO.getYear());
         bookEntity.setQuantity(bookDTO.getQuantity());
         session.persist(bookEntity);
         transaction.commit();
