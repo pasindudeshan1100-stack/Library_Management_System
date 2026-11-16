@@ -44,20 +44,36 @@ public class AddMemberPageController {
     @FXML
     void AddbtnOnAction(ActionEvent event) {
 
+        memberDTO.setName(txtFullName.getText().trim());
+        memberDTO.setEmail(txtEmail.getText().trim());
+        memberDTO.setPhonenumber(txtPhone.getText().trim());
+        memberDTO.setAdress(txtAddress.getText().trim());
 
+        if (
+                memberDTO.getId().isBlank() ||
+                        memberDTO.getName().isBlank() ||
+                        memberDTO.getEmail().isBlank() ||
+                        memberDTO.getPhonenumber().isBlank() ||
+                        memberDTO.getAdress().isBlank()
+        ) {
 
+            new Alert(
+                    Alert.AlertType.WARNING,
+                    "Please fill all fields!"
+            ).showAndWait();
 
-        boolean isadded=addMemberController.addMember(
+        }
 
-        );
-    if (isadded){
-    new Alert(Alert.AlertType.INFORMATION,"New Member Added Successfully!").show();
-     clearfields();
-    
-    }
-    else {
-        new Alert(Alert.AlertType.ERROR,"Failed to Add Member.").show();
-    }
+        boolean isadded = addMemberController.addMember(memberDTO);
+
+        if (isadded) {
+
+            new Alert(Alert.AlertType.INFORMATION, "New Member Added Successfully!").show();
+            clearfields();
+
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to Add Member.").show();
+        }
     }
 
     private void clearfields() {
@@ -66,7 +82,7 @@ public class AddMemberPageController {
         txtEmail.clear();
         txtPhone.clear();
         txtEmail.clear();
-        txtAddress.clear();      
+        txtAddress.clear();
 
     }
 
