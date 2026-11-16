@@ -17,8 +17,7 @@ import java.util.List;
 
 public class AddBookController {
     Connection connection= DBConnection.getInstance().getConnection();
-    SessionFactory sessionFactory= HibernateUtil.getInstance().getSessionFactory();
-
+    Session session=HibernateUtil.getInstance().getSession();
 
     public boolean AddBook(BookDTO bookDTO) {
 //        String sql="INSERT INTO books (book_title,author,category,published_year,quantity)VALUES(?,?,?,?,?);";
@@ -37,14 +36,13 @@ public class AddBookController {
 //            throw new RuntimeException(e);
 //
 //        }
-        Session session=sessionFactory.openSession();
+
         Transaction transaction=session.beginTransaction();
         BookEntity bookEntity=new BookEntity();
         bookEntity.setAuthor(bookDTO.getAuthor());
-        bookEntity.setBook_title(bookDTO.getTitle());
+        bookEntity.setTitle(bookDTO.getTitle());
         bookEntity.setCategory(bookDTO.getCategory());
-        bookEntity.setPublished_year(bookDTO.getYear());
-        bookEntity.setQuantity(bookDTO.getQuantity());
+        bookEntity.setYear(bookDTO.getQuantity());
         session.persist(bookEntity);
         transaction.commit();
         return true;

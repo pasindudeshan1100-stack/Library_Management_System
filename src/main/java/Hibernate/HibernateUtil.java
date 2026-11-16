@@ -1,27 +1,29 @@
 package Hibernate;
 
 import Entity.*;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 
 public class HibernateUtil {
-    private static SessionFactory sessionFactory;
+    private static Session session;
     private  static HibernateUtil instance;
 
     private HibernateUtil(){
-        Configuration configuration=new Configuration();
-        configuration.setProperty("hibernate.connection.url","jdbc:mysql://localhost:3306/library_system?createDatabaseIfNotExist=true");
-        configuration.setProperty("hibernate.connection.username","root");
-        configuration.setProperty("hibernate.connection.password","1234");
-        configuration.setProperty("hibernate.hbm2ddl.auto","update");
-        configuration.addAnnotatedClass(MemberEntity.class);
-        configuration.addAnnotatedClass(BookEntity.class);
-        configuration.addAnnotatedClass(IssueBookEntity.class);
-        configuration.addAnnotatedClass(ReturnBookEntity.class);
-        configuration.addAnnotatedClass(BookHistoryEntity.class);
+        Configuration configuration=new Configuration().configure()
 
-        sessionFactory= configuration.buildSessionFactory();
+        .addAnnotatedClass(MemberEntity.class)
+        .addAnnotatedClass(BookEntity.class)
+        .addAnnotatedClass(IssueBookEntity.class)
+        .addAnnotatedClass(ReturnBookEntity.class)
+        .addAnnotatedClass(BookHistoryEntity.class);
+
+        SessionFactory sessionFactory=configuration.buildSessionFactory();
+        session =sessionFactory.openSession();
+
+
+
 
     }
     public static HibernateUtil getInstance(){
@@ -30,8 +32,8 @@ public class HibernateUtil {
         }
         return instance;
     }
-    public SessionFactory getSessionFactory(){
-        return sessionFactory;
+    public Session getSession(){
+        return session;
     }
 
 }

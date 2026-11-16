@@ -1,40 +1,51 @@
 package Entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Audited;
 
 @Entity
 @Table(name ="book")
 public class BookEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String book_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String bookid;
     @Column(name ="book_title",nullable = false,length =150 )
-    private  String book_title;
+    private  String title;
     @Column(name = "author",nullable = false)
     private  String author;
     @Column(name = "category",nullable = false)
     private String  category;
     @Column(name = "published_year",nullable = false)
-    private Integer published_year;
+    private Integer year;
     @Column(name = "quantity",nullable = false)
     private  Integer quantity;
 
-    public String getBook_id() {
-        return book_id;
+    public BookEntity() {
     }
 
-    public void setBook_id(String book_id) {
-        this.book_id = book_id;
+    public BookEntity(String bookid, String title, String author, String category, Integer year, Integer quantity) {
+        this.bookid = bookid;
+        this.title = title;
+        this.author = author;
+        this.category = category;
+        this.year = year;
+        this.quantity = quantity;
     }
 
-    public String getBook_title() {
-        return book_title;
+    public String getBookid() {
+        return bookid;
     }
 
-    public void setBook_title(String book_title) {
-        this.book_title = book_title;
+    public void setBookid(String bookid) {
+        this.bookid = bookid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAuthor() {
@@ -53,12 +64,12 @@ public class BookEntity {
         this.category = category;
     }
 
-    public Integer getPublished_year() {
-        return published_year;
+    public Integer getYear() {
+        return year;
     }
 
-    public void setPublished_year(Integer published_year) {
-        this.published_year = published_year;
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public Integer getQuantity() {
@@ -66,18 +77,6 @@ public class BookEntity {
     }
 
     public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public BookEntity() {
-    }
-
-    public BookEntity(String book_id, String book_title, String author, String category, Integer published_year, Integer quantity) {
-        this.book_id = book_id;
-        this.book_title = book_title;
-        this.author = author;
-        this.category = category;
-        this.published_year = published_year;
         this.quantity = quantity;
     }
 }
