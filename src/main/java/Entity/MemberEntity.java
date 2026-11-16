@@ -16,7 +16,7 @@ public class MemberEntity {
     private  String email;
 
     @Column (name = "phone_number",nullable = false)
-    private String phoneNumber;
+    private String phone_number;
 
     @Column (name = "adress",nullable = false)
     private  String adress;
@@ -24,11 +24,11 @@ public class MemberEntity {
     public MemberEntity() {
     }
 
-    public MemberEntity(Integer member_id, String name, String email, String phoneNumber, String adress) {
+    public MemberEntity(Integer member_id, String name, String email, String phone_number, String adress) {
         this.member_id = member_id;
         this.name = name;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.phone_number = phone_number;
         this.adress = adress;
     }
 
@@ -57,11 +57,11 @@ public class MemberEntity {
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return phone_number;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.phone_number = phoneNumber;
     }
 
     public String getAdress() {
