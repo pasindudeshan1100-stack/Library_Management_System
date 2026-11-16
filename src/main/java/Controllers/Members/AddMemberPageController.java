@@ -20,6 +20,7 @@ public class AddMemberPageController {
 
 
     AddMemberController addMemberController=new AddMemberController();
+    MemberDTO memberDTO=new MemberDTO();
 
     @FXML
     private Label lblMessage;
@@ -42,16 +43,12 @@ public class AddMemberPageController {
      MemberPageController    memberPageController=new MemberPageController();
     @FXML
     void AddbtnOnAction(ActionEvent event) {
-        String fullname=txtFullName.getText();
-        String email=txtEmail.getText();
-        String phonenumber=txtPhone.getText();
-        String adress=txtAddress.getText();
+
+
+
 
         boolean isadded=addMemberController.addMember(
-                fullname.trim(),
-                email.trim(),
-                phonenumber.trim(),
-                adress.trim()
+
         );
     if (isadded){
     new Alert(Alert.AlertType.INFORMATION,"New Member Added Successfully!").show();
@@ -84,13 +81,12 @@ public class AddMemberPageController {
     }
 
     public void btnUpdateOnAction(ActionEvent actionEvent) {
-        MemberDTO memberDTO=new MemberDTO(
-                txtMemberId.getText().trim(),
-                txtFullName.getText().trim(),
-                txtEmail.getText().trim(),
-                txtAddress.getText().trim(),
-                txtPhone.getText().trim()
-        );
+
+        memberDTO.setName(txtFullName.getText().trim());
+        memberDTO.setEmail(txtEmail.getText().trim());
+        memberDTO.setPhonenumber(txtPhone.getText().trim());
+        memberDTO.setAdress(txtAddress.getText().trim());
+
         boolean isUpdate= addMemberController.UpdateMember(
                 memberDTO.getName(),
                 memberDTO.getEmail(),
@@ -107,14 +103,11 @@ public class AddMemberPageController {
     }
 
     public void btnDeleteOnAction(ActionEvent actionEvent) {
-        MemberDTO memberDTO=new MemberDTO(
-                txtMemberId.getText().trim(),
-                txtFullName.getText().trim(),
-                txtEmail.getText().trim(),
-                txtAddress.getText().trim(),
-                txtPhone.getText().trim()
+        memberDTO.setName(txtFullName.getText().trim());
+        memberDTO.setEmail(txtEmail.getText().trim());
+        memberDTO.setPhonenumber(txtPhone.getText().trim());
+        memberDTO.setAdress(txtAddress.getText().trim());
 
-        );
         boolean isDelete= addMemberController.deleteMember(
                memberDTO.getId()
 
