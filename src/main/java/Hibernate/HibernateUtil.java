@@ -11,7 +11,7 @@ public class HibernateUtil {
     private  static HibernateUtil instance;
 
     private HibernateUtil(){
-        Configuration configuration=new Configuration().configure()
+        Configuration configuration=new Configuration().configure("hibernate.cfg.xml")
 
         .addAnnotatedClass(MemberEntity.class)
         .addAnnotatedClass(BookEntity.class)

@@ -43,6 +43,7 @@ public class AddBookController {
         bookEntity.setTitle(bookDTO.getTitle());
         bookEntity.setCategory(bookDTO.getCategory());
         bookEntity.setYear(bookDTO.getQuantity());
+        bookEntity.setQuantity(bookDTO.getQuantity());
         session.persist(bookEntity);
         transaction.commit();
         return true;

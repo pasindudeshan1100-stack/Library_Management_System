@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 public class BookEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String bookid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookid;
     @Column(name ="book_title",nullable = false,length =150 )
     private  String title;
     @Column(name = "author",nullable = false)
@@ -23,7 +23,7 @@ public class BookEntity {
     public BookEntity() {
     }
 
-    public BookEntity(String bookid, String title, String author, String category, Integer year, Integer quantity) {
+    public BookEntity(Long bookid, String title, String author, String category, Integer year, Integer quantity) {
         this.bookid = bookid;
         this.title = title;
         this.author = author;
@@ -32,11 +32,11 @@ public class BookEntity {
         this.quantity = quantity;
     }
 
-    public String getBookid() {
+    public Long getBookid() {
         return bookid;
     }
 
-    public void setBookid(String bookid) {
+    public void setBookid(Long bookid) {
         this.bookid = bookid;
     }
 
