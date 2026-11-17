@@ -62,12 +62,7 @@ public class ReturnBookPgeController implements Initializable {
 
     public void btnReturnOnAction(ActionEvent actionEvent) {
         ReturnBookDTO returnBookDTO=new ReturnBookDTO(txtMemberId.getText().trim(),txtBookId.getText().trim(),txtBookName.getText().trim(),dpReturnDate.getValue());
-        boolean isReturned=returnBookController.ReturnBook(
-            returnBookDTO.getMemberId(),
-            returnBookDTO.getBookId(),
-            returnBookDTO.getBooktitle(),
-            returnBookDTO.getReturnDate()
-        );
+        boolean isReturned=returnBookController.addReturnBook(returnBookDTO);
         if (isReturned){
             new Alert(Alert.AlertType.INFORMATION," Book Returned Successfully!").show();
         }else {

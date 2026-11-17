@@ -50,7 +50,6 @@ public class AddMemberPageController {
         memberDTO.setAdress(txtAddress.getText().trim());
 
         if (
-                memberDTO.getId().isBlank() ||
                         memberDTO.getName().isBlank() ||
                         memberDTO.getEmail().isBlank() ||
                         memberDTO.getPhonenumber().isBlank() ||
