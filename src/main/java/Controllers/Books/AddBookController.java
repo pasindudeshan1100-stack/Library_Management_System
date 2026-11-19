@@ -1,7 +1,12 @@
 package Controllers.Books;
 
+import Entity.BookEntity;
+import Hibernate.HibernateUtil;
 import Model.BookDTO;
 import db.DBConnection;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,26 +17,36 @@ import java.util.List;
 
 public class AddBookController {
     Connection connection= DBConnection.getInstance().getConnection();
-    
+    Session session=HibernateUtil.getInstance().getSession();
 
-    public boolean AddBook(String author, String title, String category, int year, int quantity) {
-        String sql="INSERT INTO books (book_title,author,category,published_year,quantity)VALUES(?,?,?,?,?);";
+    public boolean AddBook(BookDTO bookDTO) {
+//        String sql="INSERT INTO books (book_title,author,category,published_year,quantity)VALUES(?,?,?,?,?);";
+//
+//        try {
+//            PreparedStatement preparedStatement= connection.prepareStatement(sql);
+//            preparedStatement.setString(1,title);
+//            preparedStatement.setString(2,author);
+//            preparedStatement.setString(3,category);
+//            preparedStatement.setInt(4, year);
+//            preparedStatement.setInt(5, quantity);
+//
+//            return preparedStatement.executeUpdate()>0;
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//
+//        }
 
-        try {
-            PreparedStatement preparedStatement= connection.prepareStatement(sql);
-            preparedStatement.setString(1,title);
-            preparedStatement.setString(2,author);
-            preparedStatement.setString(3,category);
-            preparedStatement.setInt(4, year);
-            preparedStatement.setInt(5, quantity);
-
-            return preparedStatement.executeUpdate()>0;
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-
-        }
-
+        Transaction transaction=session.beginTransaction();
+        BookEntity bookEntity=new BookEntity();
+        bookEntity.setAuthor(bookDTO.getAuthor());
+        bookEntity.setTitle(bookDTO.getTitle());
+        bookEntity.setCategory(bookDTO.getCategory());
+        bookEntity.setYear(bookDTO.getYear());
+        bookEntity.setQuantity(bookDTO.getQuantity());
+        session.persist(bookEntity);
+        transaction.commit();
+        return true;
     }
     public List<BookDTO> getAllBooks(){
         List<BookDTO>books=new ArrayList<>();

@@ -65,12 +65,7 @@ public class IssueBookPageController implements Initializable {
 
     public void btnIssueOnAction(ActionEvent actionEvent) {
         IssueBookDTO issueBookDTO=new IssueBookDTO(txtBookId.getText().trim(),txtMemberId.getText().trim(),dpIssueDate.getValue(),dpDueDate.getValue());
-        boolean isAdded=issueBookController.addIssueBook(
-                issueBookDTO.getBookId(),
-                issueBookDTO.getMemberId(),
-                issueBookDTO.getIssueDate(),
-                issueBookDTO.getDueDate()
-        );
+        boolean isAdded=issueBookController.addIssueBook(issueBookDTO);
         if (isAdded){
             new Alert(Alert.AlertType.INFORMATION," Book issued Successfully!").show();
         }else {

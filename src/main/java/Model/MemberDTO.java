@@ -16,6 +16,10 @@ public class MemberDTO {
         this.adress = adress;
     }
 
+    public MemberDTO() {
+
+    }
+
     public String getId() {
         return id;
     }

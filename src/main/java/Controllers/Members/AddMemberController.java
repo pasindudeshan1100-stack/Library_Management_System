@@ -1,8 +1,13 @@
 package Controllers.Members;
 
+import Entity.MemberEntity;
+import Hibernate.HibernateUtil;
 import Model.MemberDTO;
 import db.DBConnection;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import java.lang.module.Configuration;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,22 +18,32 @@ import java.util.List;
 public class AddMemberController {
 
     Connection connection= DBConnection.getInstance().getConnection();
+    Session session= HibernateUtil.getInstance().getSession();
 
-    public boolean addMember(String name, String email, String phonenumber, String adress) {
-        String sql="INSERT INTO members (full_name,email,phone_number,adress) VALUES (?,?,?,?);";
-        try {
-           PreparedStatement preparedStatement= connection.prepareStatement(sql);
-             preparedStatement.setString(1,name);
-             preparedStatement.setString(2,email);
-             preparedStatement.setString(3,phonenumber);
-             preparedStatement.setString(4,adress);
+    public boolean addMember(MemberDTO memberDTO) {
+//        String sql="INSERT INTO members (full_name,email,phone_number,adress) VALUES (?,?,?,?);";
+//        try {
+//           PreparedStatement preparedStatement= connection.prepareStatement(sql);
+//             preparedStatement.setString(1,name);
+//             preparedStatement.setString(2,email);
+//             preparedStatement.setString(3,phonenumber);
+//             preparedStatement.setString(4,adress);
+//
+//       return preparedStatement.executeUpdate()>0;
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+        Transaction transaction= session.beginTransaction();
 
-       return preparedStatement.executeUpdate()>0;
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+        MemberEntity memberEntity=new MemberEntity();
+        memberEntity.setName(memberDTO.getName());
+        memberEntity.setEmail(memberDTO.getEmail());
+        memberEntity.setPhoneNumber(memberDTO.getPhonenumber());
+        memberEntity.setAdress(memberDTO.getAdress());
+        session.persist(memberEntity);
+        transaction.commit();
+        return true;
     }
 
     public List<MemberDTO> getAllMembers(){
