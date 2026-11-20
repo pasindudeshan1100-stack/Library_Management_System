@@ -1,6 +1,8 @@
 package Controllers.Books;
 
 import Model.BookDTO;
+import Service.AddBookService;
+import Service.AddBookServiceImpl;
 import db.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,11 +19,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddBookPageController  {
+public class AddBookPageController  implements Initializable {
+
+    AddBookService service=new AddBookServiceImpl();
 
     public Button btnUpdate;
     public Button btnDelete;
-    AddBookController addBookController= new AddBookController();
 
     @FXML
     private ComboBox<String> cmbCategory;
@@ -48,6 +51,8 @@ public class AddBookPageController  {
         book.setAuthor(txtAuthor.getText().trim());
         book.setTitle(txtBookTitle.getText().trim());
         book.setCategory(cmbCategory.getValue());
+        book.setYear(Integer.valueOf(txtPublishedYear.getText().trim()));
+        book.setQuantity(Integer.valueOf(txtQuantity.getText().trim()));
 
 
         if (book.getAuthor().isBlank()
@@ -64,11 +69,8 @@ public class AddBookPageController  {
 
         }
         try {
-            book.setYear(Integer.valueOf(txtPublishedYear.getText().trim()));
-            book.setQuantity(Integer.valueOf(txtQuantity.getText().trim()));
 
-            boolean isAdded=addBookController.AddBook(book);
-
+            boolean isAdded=service.addBookDetails(book);
 
             if (isAdded){
                 new Alert(Alert.AlertType.INFORMATION,"New Book added Successfully!").show();
@@ -152,59 +154,58 @@ public class AddBookPageController  {
         }
     }
     public void UpdateOnAction(ActionEvent actionEvent) {
-
-        String id=txtBookId.getText().trim();
-        String author=txtAuthor.getText().trim();
-        String category=cmbCategory.getValue().trim();
-        String title=txtBookTitle.getText().trim();
-        String year=txtPublishedYear.getText().trim();
-        String Quantity=txtQuantity.getText().trim();
-        if (author.isBlank()
-                || title.isBlank()
-                || category == null
-                || year.isBlank()
-                || Quantity.isBlank()) {
-
-            new Alert(
-                    Alert.AlertType.WARNING,
-                    "Please fill all fields!"
-            ).showAndWait();
-
-            return;
-        }
-            int published_year=Integer.parseInt(year);
-            int quantity=Integer.parseInt(Quantity);
-       boolean isUpdated= addBookController.updateBook(id,author,category,title,published_year,quantity);
-       if (isUpdated){
-           new Alert(Alert.AlertType.INFORMATION,"Updated Book Successfully!").show();
-
-       }
-       else {
-           new Alert(Alert.AlertType.ERROR,"Failed to update Book!").show();
-       }
-       clearFields();
-
-    }
-
-    public void DeleteOnAction(ActionEvent actionEvent) {
-       String id=txtBookId.getText().trim();
-
-      boolean isDeleted= addBookController.deleteBooks(id);
-      if (isDeleted){
-          new Alert(Alert.AlertType.INFORMATION,"Delete Book Successfully!").show();
-
-      }else {
-          new Alert(Alert.AlertType.ERROR,"Failed to delete Book!").show();
-      }
-     clearFields();
-    }
-
-
-
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
 //
-//    }
+//        String id=txtBookId.getText().trim();
+//        String author=txtAuthor.getText().trim();
+//        String category=cmbCategory.getValue().trim();
+//        String title=txtBookTitle.getText().trim();
+//        String year=txtPublishedYear.getText().trim();
+//        String Quantity=txtQuantity.getText().trim();
+//        if (author.isBlank()
+//                || title.isBlank()
+//                || category == null
+//                || year.isBlank()
+//                || Quantity.isBlank()) {
+//
+//            new Alert(
+//                    Alert.AlertType.WARNING,
+//                    "Please fill all fields!"
+//            ).showAndWait();
+//
+//            return;
+//        }
+//            int published_year=Integer.parseInt(year);
+//            int quantity=Integer.parseInt(Quantity);
+//       boolean isUpdated= service.updateBook(id,author,category,title,published_year,quantity);
+//       if (isUpdated){
+//           new Alert(Alert.AlertType.INFORMATION,"Updated Book Successfully!").show();
+//
+//       }
+//       else {
+//           new Alert(Alert.AlertType.ERROR,"Failed to update Book!").show();
+//       }
+//       clearFields();
+//
+    }
+//
+    public void DeleteOnAction(ActionEvent actionEvent) {
+//       String id=txtBookId.getText().trim();
+//
+//      boolean isDeleted= addBookController.deleteBooks(id);
+//      if (isDeleted){
+//          new Alert(Alert.AlertType.INFORMATION,"Delete Book Successfully!").show();
+//
+//      }else {
+//          new Alert(Alert.AlertType.ERROR,"Failed to delete Book!").show();
+//      }
+//     clearFields();
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 }
 
 

@@ -1,12 +1,8 @@
-package Controllers.Books;
+package Service;
 
-import Entity.BookEntity;
-import Hibernate.HibernateUtil;
 import Model.BookDTO;
+import Repository.BookRepository;
 import db.DBConnection;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,11 +11,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddBookController {
+public class AddBookServiceImpl implements AddBookService {
     Connection connection= DBConnection.getInstance().getConnection();
-    Session session=HibernateUtil.getInstance().getSession();
 
-    public boolean AddBook(BookDTO bookDTO) {
+//    public boolean AddBook(BookDTO bookDTO) {
 //        String sql="INSERT INTO books (book_title,author,category,published_year,quantity)VALUES(?,?,?,?,?);";
 //
 //        try {
@@ -36,18 +31,18 @@ public class AddBookController {
 //            throw new RuntimeException(e);
 //
 //        }
-
-        Transaction transaction=session.beginTransaction();
-        BookEntity bookEntity=new BookEntity();
-        bookEntity.setAuthor(bookDTO.getAuthor());
-        bookEntity.setTitle(bookDTO.getTitle());
-        bookEntity.setCategory(bookDTO.getCategory());
-        bookEntity.setYear(bookDTO.getYear());
-        bookEntity.setQuantity(bookDTO.getQuantity());
-        session.persist(bookEntity);
-        transaction.commit();
-        return true;
-    }
+//
+//        Transaction transaction=session.beginTransaction();
+//        BookEntity bookEntity=new BookEntity();
+//        bookEntity.setAuthor(bookDTO.getAuthor());
+//        bookEntity.setTitle(bookDTO.getTitle());
+//        bookEntity.setCategory(bookDTO.getCategory());
+//        bookEntity.setYear(bookDTO.getYear());
+//        bookEntity.setQuantity(bookDTO.getQuantity());
+//        session.persist(bookEntity);
+//        transaction.commit();
+//        return true;
+//    }
     public List<BookDTO> getAllBooks(){
         List<BookDTO>books=new ArrayList<>();
         String sql="SELECT * FROM books;";
@@ -109,5 +104,12 @@ public class AddBookController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    BookRepository bookRepository=new BookRepository();
+    @Override
+    public boolean addBookDetails(BookDTO bookDTO) {
+       return bookRepository.addBook(bookDTO);
+
     }
 }
