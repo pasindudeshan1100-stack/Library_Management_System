@@ -34,4 +34,49 @@ public class BookRepository {
         }
 
     }
+
+    public boolean updateBook(BookDTO bookDTO){
+
+        Transaction transaction=session.beginTransaction();
+
+        try {
+
+            BookEntity existingBook = session.find(BookEntity.class, bookDTO.getBookid());
+
+            if (existingBook != null) {
+                existingBook.setTitle(bookDTO.getTitle());
+                existingBook.setAuthor(bookDTO.getAuthor());
+                existingBook.setCategory(bookDTO.getCategory());
+                existingBook.setQuantity(bookDTO.getQuantity());
+                existingBook.setYear(bookDTO.getYear());
+
+                transaction.commit();
+                return true;
+
+            }
+
+           transaction.rollback();
+            return false;
+
+
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+
+            throw new RuntimeException(e);
+        }
+    }
+
+    public BookEntity searchBook(Integer bookId){
+        try {
+            return session.find(BookEntity.class, bookId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+
+        }
+
+    }
+
 }
