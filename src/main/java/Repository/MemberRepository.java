@@ -52,4 +52,18 @@ public class MemberRepository {
             throw new RuntimeException(e);
         }
     }
+    public  boolean deletemember(Integer id){
+        Transaction transaction=session.beginTransaction();
+        try {
+            MemberEntity member=session.find(MemberEntity.class,id);
+            if (member!=null){
+                session.remove(member);
+                transaction.commit();
+                return true;
+            }
+            return  false;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

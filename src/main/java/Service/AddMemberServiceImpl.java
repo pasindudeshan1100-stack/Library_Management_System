@@ -116,6 +116,6 @@ public class AddMemberServiceImpl implements AddMemberService {
 
     @Override
     public boolean deletememberDetails(Integer id) {
-        return false;
+        return memberRepository.deletemember(id);
     }
 }

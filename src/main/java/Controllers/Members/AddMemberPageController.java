@@ -1,5 +1,6 @@
 package Controllers.Members;
 
+import Model.BookDTO;
 import Model.MemberDTO;
 
 import Service.AddMemberService;
@@ -122,21 +123,15 @@ public class AddMemberPageController {
     }
 
     public void btnDeleteOnAction(ActionEvent actionEvent) {
-//        memberDTO.setName(txtFullName.getText().trim());
-//        memberDTO.setEmail(txtEmail.getText().trim());
-//        memberDTO.setPhonenumber(txtPhone.getText().trim());
-//        memberDTO.setAdress(txtAddress.getText().trim());
-//
-//        boolean isDelete= addMemberController.deleteMember(
-//               memberDTO.getId()
-//
-//        );
-//        if (isDelete){
-//            new Alert(Alert.AlertType.INFORMATION," Member Deleted Successfully!").show();
-//            clearfields();
-//        }else {
-//            new Alert(Alert.AlertType.ERROR,"Failed to delete Member.").show();
+        String id = txtMemberId.getText().trim();
+        boolean isDeleted = service.deletememberDetails(Integer.valueOf(id));
+        if (isDeleted) {
+            new Alert(Alert.AlertType.INFORMATION, " Member Deleted Successfully!").show();
+            clearfields();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to delete Member.").show();
         }
+    }
 
 //    public void initialize(){
 //        txtMemberId.textProperty().addListener(
