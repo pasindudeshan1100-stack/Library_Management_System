@@ -106,7 +106,7 @@ public class AddMemberServiceImpl implements AddMemberService {
 
     @Override
     public boolean updateMemberDetails(MemberDTO memberDTO) {
-        return false;
+        return memberRepository.updateMember(memberDTO);
     }
 
     @Override

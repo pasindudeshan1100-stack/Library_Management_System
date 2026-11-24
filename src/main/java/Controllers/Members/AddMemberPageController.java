@@ -92,24 +92,33 @@ public class AddMemberPageController {
 
     public void btnUpdateOnAction(ActionEvent actionEvent) {
 
+        memberDTO.setId(txtMemberId.getText().trim());
         memberDTO.setName(txtFullName.getText().trim());
         memberDTO.setEmail(txtEmail.getText().trim());
         memberDTO.setPhonenumber(txtPhone.getText().trim());
         memberDTO.setAdress(txtAddress.getText().trim());
-//
-//        boolean isUpdate= addMemberController.UpdateMember(
-//                memberDTO.getName(),
-//                memberDTO.getEmail(),
-//                memberDTO.getAdress(),
-//                memberDTO.getPhonenumber()
-//
-//        );
-//        if (isUpdate){
-//            new Alert(Alert.AlertType.INFORMATION," Member updated Successfully!").show();
-//            clearfields();
-//        }else {
-//            new Alert(Alert.AlertType.ERROR,"Failed to update Member.").show();
-//        }
+
+        if (
+                        memberDTO.getName().isBlank() ||
+                        memberDTO.getEmail().isBlank() ||
+                        memberDTO.getPhonenumber().isBlank() ||
+                        memberDTO.getAdress().isBlank()
+        ) {
+
+            new Alert(
+                    Alert.AlertType.WARNING,
+                    "Please fill all fields!"
+            ).showAndWait();
+
+        }
+
+        boolean isUpdate= service.updateMemberDetails(memberDTO);
+        if (isUpdate){
+            new Alert(Alert.AlertType.INFORMATION," Member updated Successfully!").show();
+            clearfields();
+        }else {
+            new Alert(Alert.AlertType.ERROR,"Failed to update Member.").show();
+        }
     }
 
     public void btnDeleteOnAction(ActionEvent actionEvent) {

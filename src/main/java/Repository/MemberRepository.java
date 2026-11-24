@@ -1,5 +1,6 @@
 package Repository;
 
+import Entity.BookEntity;
 import Entity.MemberEntity;
 import Hibernate.HibernateUtil;
 import Model.MemberDTO;
@@ -27,6 +28,28 @@ public class MemberRepository {
 
             e.printStackTrace();
             return false;
+        }
+    }
+    public boolean updateMember(MemberDTO memberDTO){
+        Transaction transaction=session.beginTransaction();
+        try {
+            MemberEntity member=session.find(MemberEntity.class,memberDTO.getId());
+            if (member!=null){
+                member.setName(memberDTO.getName());
+                member.setEmail(memberDTO.getEmail());
+                member.setAdress(memberDTO.getAdress());
+                member.setPhoneNumber(memberDTO.getPhonenumber());
+                transaction.commit();
+                return  true;
+            }
+            transaction.rollback();
+            return  false;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+
+            throw new RuntimeException(e);
         }
     }
 }
