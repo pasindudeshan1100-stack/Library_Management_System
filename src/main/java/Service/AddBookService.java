@@ -5,9 +5,10 @@ import Model.BookDTO;
 import Repository.BookRepository;
 
 public interface AddBookService {
-    public boolean addBookDetails(BookDTO bookDTO);
-    public  boolean updateBookdetails(BookDTO bookDTO);
-    public BookEntity searchBookDetails(Integer bookId);
+    boolean addBookDetails(BookDTO bookDTO);
+    boolean updateBookdetails(BookDTO bookDTO);
+    BookEntity searchBookDetails(Integer bookId);
+    boolean deleteBook(Integer bookId);
 
 
 }

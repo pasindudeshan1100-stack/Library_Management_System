@@ -94,18 +94,18 @@ public class AddBookServiceImpl implements AddBookService {
 //    }
 
 
-    public boolean deleteBooks(String id) {
-        String sql="DELETE FROM books WHERE book_id = ?;";
-        try {
-            PreparedStatement preparedStatement= connection.prepareStatement(sql);
-
-            preparedStatement.setString(1,id);
-            int rowsAffected= preparedStatement.executeUpdate();
-            return rowsAffected>0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public boolean deleteBooks(String id) {
+//        String sql="DELETE FROM books WHERE book_id = ?;";
+//        try {
+//            PreparedStatement preparedStatement= connection.prepareStatement(sql);
+//
+//            preparedStatement.setString(1,id);
+//            int rowsAffected= preparedStatement.executeUpdate();
+//            return rowsAffected>0;
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     BookRepository bookRepository=new BookRepository();
     @Override
@@ -122,5 +122,10 @@ public class AddBookServiceImpl implements AddBookService {
     @Override
     public BookEntity searchBookDetails(Integer bookId) {
       return bookRepository.searchBook(bookId);
+    }
+
+    @Override
+    public boolean deleteBook(Integer bookId) {
+        return bookRepository.DeleteBook(bookId);
     }
 }

@@ -200,18 +200,17 @@ public class AddBookPageController  implements Initializable {
         }
     }
 
-    //
     public void DeleteOnAction(ActionEvent actionEvent) {
-//       String id=txtBookId.getText().trim();
-//
-//      boolean isDeleted= addBookController.deleteBooks(id);
-//      if (isDeleted){
-//          new Alert(Alert.AlertType.INFORMATION,"Delete Book Successfully!").show();
-//
-//      }else {
-//          new Alert(Alert.AlertType.ERROR,"Failed to delete Book!").show();
-//      }
-//     clearFields();
+       String id=txtBookId.getText().trim();
+
+      boolean isDeleted= service.deleteBook(Integer.valueOf(id));
+      if (isDeleted){
+          new Alert(Alert.AlertType.INFORMATION,"Delete Book Successfully!").show();
+
+      }else {
+          new Alert(Alert.AlertType.ERROR,"Failed to delete Book!").show();
+      }
+     clearFields();
     }
 
 

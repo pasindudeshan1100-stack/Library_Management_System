@@ -78,5 +78,23 @@ public class BookRepository {
         }
 
     }
+    public boolean DeleteBook(Integer bookId) {
+        Transaction transaction = session.beginTransaction();
+        try {
+            BookEntity book = session.find(BookEntity.class, bookId);
+
+            if (book!=null){
+                session.remove(book);
+                transaction.commit();
+                return  true;
+            }
+            return  false;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+
+        }
+
+    }
 
 }
