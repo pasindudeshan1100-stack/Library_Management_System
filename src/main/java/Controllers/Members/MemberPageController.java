@@ -1,6 +1,7 @@
 package Controllers.Members;
 
 import Model.MemberDTO;
+import Service.AddMemberServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +19,7 @@ public class MemberPageController {
     public TextField txtSearch;
     public Button btnAddMember;
     public Button logoutButton;
-    private AddMemberController addMemberController=new AddMemberController();
+    private AddMemberServiceImpl addMemberController=new AddMemberServiceImpl();
     @FXML
     private TableColumn<MemberDTO, String> colAdress;
 
