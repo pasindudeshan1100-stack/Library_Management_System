@@ -2,7 +2,6 @@ package Service;
 
 import Entity.BookEntity;
 import Model.BookDTO;
-import Repository.BookRepository;
 
 public interface AddBookService {
     boolean addBookDetails(BookDTO bookDTO);

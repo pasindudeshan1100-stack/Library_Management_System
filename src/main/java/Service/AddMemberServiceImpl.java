@@ -1,13 +1,12 @@
-package Controllers.Members;
+package Service;
 
-import Entity.MemberEntity;
+import Entity.BookEntity;
 import Hibernate.HibernateUtil;
 import Model.MemberDTO;
+import Repository.MemberRepository;
 import db.DBConnection;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-import java.lang.module.Configuration;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,12 +14,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddMemberController {
+public class AddMemberServiceImpl implements AddMemberService {
 
     Connection connection= DBConnection.getInstance().getConnection();
     Session session= HibernateUtil.getInstance().getSession();
 
-    public boolean addMember(MemberDTO memberDTO) {
+    MemberRepository memberRepository=new MemberRepository();
+
+
+//    public boolean addMember(MemberDTO memberDTO) {
 //        String sql="INSERT INTO members (full_name,email,phone_number,adress) VALUES (?,?,?,?);";
 //        try {
 //           PreparedStatement preparedStatement= connection.prepareStatement(sql);
@@ -34,17 +36,17 @@ public class AddMemberController {
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
-        Transaction transaction= session.beginTransaction();
-
-        MemberEntity memberEntity=new MemberEntity();
-        memberEntity.setName(memberDTO.getName());
-        memberEntity.setEmail(memberDTO.getEmail());
-        memberEntity.setPhoneNumber(memberDTO.getPhonenumber());
-        memberEntity.setAdress(memberDTO.getAdress());
-        session.persist(memberEntity);
-        transaction.commit();
-        return true;
-    }
+//        Transaction transaction= session.beginTransaction();
+//
+//        MemberEntity memberEntity=new MemberEntity();
+//        memberEntity.setName(memberDTO.getName());
+//        memberEntity.setEmail(memberDTO.getEmail());
+//        memberEntity.setPhoneNumber(memberDTO.getPhonenumber());
+//        memberEntity.setAdress(memberDTO.getAdress());
+//        session.persist(memberEntity);
+//        transaction.commit();
+//        return true;
+//    }
 
     public List<MemberDTO> getAllMembers(){
         List<MemberDTO> members=new ArrayList<>();
@@ -97,4 +99,23 @@ public class AddMemberController {
 
     }
 
+    @Override
+    public boolean addMemberDetails(MemberDTO memberDTO) {
+        return memberRepository.addmember(memberDTO);
+    }
+
+    @Override
+    public boolean updateMemberDetails(MemberDTO memberDTO) {
+        return memberRepository.updateMember(memberDTO);
+    }
+
+    @Override
+    public BookEntity searchMemberDetails(Integer id) {
+        return null;
+    }
+
+    @Override
+    public boolean deletememberDetails(Integer id) {
+        return memberRepository.deletemember(id);
+    }
 }
