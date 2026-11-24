@@ -1,24 +1,21 @@
 package Controllers.Books;
 
 import Model.BookDTO;
+import Service.AddBookServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import Scene.SceneManager;
 
-import java.io.IOException;
 import java.util.List;
 
 public class BookPageController {
 
     public Button logoutButton;
-    AddBookController addBookController=new AddBookController();
+    AddBookServiceImpl addBookController=new AddBookServiceImpl();
     @FXML
     private TableColumn<BookDTO, String> actionColumn;
 

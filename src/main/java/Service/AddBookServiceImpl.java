@@ -1,0 +1,131 @@
+package Service;
+
+import Entity.BookEntity;
+import Model.BookDTO;
+import Repository.BookRepository;
+import db.DBConnection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AddBookServiceImpl implements AddBookService {
+    Connection connection= DBConnection.getInstance().getConnection();
+
+//    public boolean AddBook(BookDTO bookDTO) {
+//        String sql="INSERT INTO books (book_title,author,category,published_year,quantity)VALUES(?,?,?,?,?);";
+//
+//        try {
+//            PreparedStatement preparedStatement= connection.prepareStatement(sql);
+//            preparedStatement.setString(1,title);
+//            preparedStatement.setString(2,author);
+//            preparedStatement.setString(3,category);
+//            preparedStatement.setInt(4, year);
+//            preparedStatement.setInt(5, quantity);
+//
+//            return preparedStatement.executeUpdate()>0;
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//
+//        }
+//
+//        Transaction transaction=session.beginTransaction();
+//        BookEntity bookEntity=new BookEntity();
+//        bookEntity.setAuthor(bookDTO.getAuthor());
+//        bookEntity.setTitle(bookDTO.getTitle());
+//        bookEntity.setCategory(bookDTO.getCategory());
+//        bookEntity.setYear(bookDTO.getYear());
+//        bookEntity.setQuantity(bookDTO.getQuantity());
+//        session.persist(bookEntity);
+//        transaction.commit();
+//        return true;
+//    }
+    public List<BookDTO> getAllBooks(){
+        List<BookDTO>books=new ArrayList<>();
+        String sql="SELECT * FROM books;";
+
+        try {
+
+            PreparedStatement preparedStatement= connection.prepareStatement(sql);
+            ResultSet resultSet= preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                BookDTO book=new BookDTO(
+                resultSet.getString("book_id"),
+                resultSet.getString("book_title"),
+                resultSet.getString("author"),
+                resultSet.getString("category"),
+                resultSet.getInt("published_year"),
+                resultSet.getInt("quantity")
+                );
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return books;
+    }
+
+//    public boolean updateBook(String id,String author, String category, String title, int year, int quantity){
+//        String sql="UPDATE books SET book_title=?,author=?,category=?,published_year=?,quantity=? WHERE book_id=?;" ;
+//        try {
+//          PreparedStatement preparedStatement=  connection.prepareStatement(sql);
+//          preparedStatement.setString(3,title);
+//          preparedStatement.setString(1,author);
+//          preparedStatement.setString(2,category);
+//          preparedStatement.setInt(4,year);
+//          preparedStatement.setInt(5,quantity);
+//          preparedStatement.setString(6,id);
+//          return preparedStatement.executeUpdate()>0;
+//
+//
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//
+//
+//        }
+//
+//        return false;
+//    }
+
+
+//    public boolean deleteBooks(String id) {
+//        String sql="DELETE FROM books WHERE book_id = ?;";
+//        try {
+//            PreparedStatement preparedStatement= connection.prepareStatement(sql);
+//
+//            preparedStatement.setString(1,id);
+//            int rowsAffected= preparedStatement.executeUpdate();
+//            return rowsAffected>0;
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+
+    BookRepository bookRepository=new BookRepository();
+    @Override
+    public boolean addBookDetails(BookDTO bookDTO) {
+       return bookRepository.addBook(bookDTO);
+
+    }
+
+    @Override
+    public boolean updateBookdetails(BookDTO bookDTO) {
+        return bookRepository.updateBook(bookDTO);
+    }
+
+    @Override
+    public BookEntity searchBookDetails(Integer bookId) {
+      return bookRepository.searchBook(bookId);
+    }
+
+    @Override
+    public boolean deleteBook(Integer bookId) {
+        return bookRepository.DeleteBook(bookId);
+    }
+}

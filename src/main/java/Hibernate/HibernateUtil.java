@@ -12,7 +12,7 @@ public class HibernateUtil {
 
     private HibernateUtil(){
         Configuration configuration=new Configuration().configure("hibernate.cfg.xml")
-
+        .addAnnotatedClass(UserEntity.class)
         .addAnnotatedClass(MemberEntity.class)
         .addAnnotatedClass(BookEntity.class)
         .addAnnotatedClass(IssueBookEntity.class)

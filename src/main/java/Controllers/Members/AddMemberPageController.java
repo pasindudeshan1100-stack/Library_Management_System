@@ -2,24 +2,19 @@ package Controllers.Members;
 
 import Model.BookDTO;
 import Model.MemberDTO;
-import db.DBConnection;
+
+import Service.AddMemberService;
+import Service.AddMemberServiceImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-
-
 public class AddMemberPageController {
+
     public Button btnUpdate;
     public Button btnDelete;
 
-
-    AddMemberController addMemberController=new AddMemberController();
+    AddMemberService service=new AddMemberServiceImpl();
     MemberDTO memberDTO=new MemberDTO();
 
     @FXML
@@ -41,6 +36,7 @@ public class AddMemberPageController {
     private TextField txtPhone;
 
      MemberPageController    memberPageController=new MemberPageController();
+
     @FXML
     void AddbtnOnAction(ActionEvent event) {
 
@@ -63,7 +59,7 @@ public class AddMemberPageController {
 
         }
 
-        boolean isadded = addMemberController.addMember(memberDTO);
+        boolean isadded =service.addMemberDetails(memberDTO);
 
         if (isadded) {
 
@@ -97,18 +93,27 @@ public class AddMemberPageController {
 
     public void btnUpdateOnAction(ActionEvent actionEvent) {
 
+        memberDTO.setId(txtMemberId.getText().trim());
         memberDTO.setName(txtFullName.getText().trim());
         memberDTO.setEmail(txtEmail.getText().trim());
         memberDTO.setPhonenumber(txtPhone.getText().trim());
         memberDTO.setAdress(txtAddress.getText().trim());
 
-        boolean isUpdate= addMemberController.UpdateMember(
-                memberDTO.getName(),
-                memberDTO.getEmail(),
-                memberDTO.getAdress(),
-                memberDTO.getPhonenumber()
+        if (
+                        memberDTO.getName().isBlank() ||
+                        memberDTO.getEmail().isBlank() ||
+                        memberDTO.getPhonenumber().isBlank() ||
+                        memberDTO.getAdress().isBlank()
+        ) {
 
-        );
+            new Alert(
+                    Alert.AlertType.WARNING,
+                    "Please fill all fields!"
+            ).showAndWait();
+
+        }
+
+        boolean isUpdate= service.updateMemberDetails(memberDTO);
         if (isUpdate){
             new Alert(Alert.AlertType.INFORMATION," Member updated Successfully!").show();
             clearfields();
@@ -118,51 +123,48 @@ public class AddMemberPageController {
     }
 
     public void btnDeleteOnAction(ActionEvent actionEvent) {
-        memberDTO.setName(txtFullName.getText().trim());
-        memberDTO.setEmail(txtEmail.getText().trim());
-        memberDTO.setPhonenumber(txtPhone.getText().trim());
-        memberDTO.setAdress(txtAddress.getText().trim());
-
-        boolean isDelete= addMemberController.deleteMember(
-               memberDTO.getId()
-
-        );
-        if (isDelete){
-            new Alert(Alert.AlertType.INFORMATION," Member Deleted Successfully!").show();
+        String id = txtMemberId.getText().trim();
+        boolean isDeleted = service.deletememberDetails(Integer.valueOf(id));
+        if (isDeleted) {
+            new Alert(Alert.AlertType.INFORMATION, " Member Deleted Successfully!").show();
             clearfields();
-        }else {
-            new Alert(Alert.AlertType.ERROR,"Failed to delete Member.").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to delete Member.").show();
         }
     }
-    public void initialize(){
-        txtMemberId.textProperty().addListener(
-                ((observableValue, oldValue, newValue) -> {
-                    if (newValue==null||newValue.trim().isEmpty()){
-                        clearfields();
-                    }else {
-                        loadMemberDetails(newValue.trim());
-                    }
-                })
-        );
-    }
-    public void loadMemberDetails(String memberId){
-        Connection connection= DBConnection.getInstance().getConnection();
-        String sql="SELECT * FROM members WHERE member_id=?;";
-        try {
-            PreparedStatement preparedStatement=  connection.prepareStatement(sql);
-            preparedStatement.setString(1,memberId);
 
-            ResultSet resultSet= preparedStatement.executeQuery();
-            while (resultSet.next()){
-            txtFullName.setText(resultSet.getString("full_name"));
-            txtEmail.setText(resultSet.getString("email"));
-            txtAddress.setText(resultSet.getString("adress"));
-            txtPhone.setText(resultSet.getString("phone_number"));
+//    public void initialize(){
+//        txtMemberId.textProperty().addListener(
+//                ((observableValue, oldValue, newValue) -> {
+//                    if (newValue==null||newValue.trim().isEmpty()){
+//                        clearfields();
+//                    }else {
+//                        loadMemberDetails(newValue.trim());
+//                    }
+//                })
+//        );
+//    }
+//    public void loadMemberDetails(String memberId){
+//        Connection connection= DBConnection.getInstance().getConnection();
+//        String sql="SELECT * FROM members WHERE member_id=?;";
+//        try {
+//            PreparedStatement preparedStatement=  connection.prepareStatement(sql);
+//            preparedStatement.setString(1,memberId);
+//
+//            ResultSet resultSet= preparedStatement.executeQuery();
+//            while (resultSet.next()){
+//            txtFullName.setText(resultSet.getString("full_name"));
+//            txtEmail.setText(resultSet.getString("email"));
+//            txtAddress.setText(resultSet.getString("adress"));
+//            txtPhone.setText(resultSet.getString("phone_number"));
+//
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+     }
 
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-}
+
+
 

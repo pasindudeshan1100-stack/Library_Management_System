@@ -1,7 +1,9 @@
 package Controllers.Books;
 
+import Entity.BookEntity;
 import Model.BookDTO;
-import db.DBConnection;
+import Service.AddBookService;
+import Service.AddBookServiceImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,17 +13,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddBookPageController  {
+public class AddBookPageController  implements Initializable {
+
+    AddBookService service=new AddBookServiceImpl();
 
     public Button btnUpdate;
     public Button btnDelete;
-    AddBookController addBookController= new AddBookController();
 
     @FXML
     private ComboBox<String> cmbCategory;
@@ -44,15 +43,9 @@ public class AddBookPageController  {
     @FXML
     void addBookOnAction(ActionEvent event) {
 
-        BookDTO book=new BookDTO();
-        book.setAuthor(txtAuthor.getText().trim());
-        book.setTitle(txtBookTitle.getText().trim());
-        book.setCategory(cmbCategory.getValue());
-
-
-        if (book.getAuthor().isBlank()
-                || book.getTitle().isBlank()
-                || book.getCategory() == null
+        if (txtAuthor.getText().trim().isBlank()
+                || txtBookTitle.getText().trim().isBlank()
+                || cmbCategory.getValue() == null
                 || txtQuantity.getText().trim().isBlank()
                 || txtPublishedYear.getText().trim().isBlank()) {
 
@@ -61,14 +54,18 @@ public class AddBookPageController  {
                     "Please fill all fields!"
             ).showAndWait();
 
-
+            return;
         }
+
         try {
+            BookDTO book = new BookDTO();
+            book.setAuthor(txtAuthor.getText().trim());
+            book.setTitle(txtBookTitle.getText().trim());
+            book.setCategory(cmbCategory.getValue());
             book.setYear(Integer.valueOf(txtPublishedYear.getText().trim()));
             book.setQuantity(Integer.valueOf(txtQuantity.getText().trim()));
 
-            boolean isAdded=addBookController.AddBook(book);
-
+            boolean isAdded=service.addBookDetails(book);
 
             if (isAdded){
                 new Alert(Alert.AlertType.INFORMATION,"New Book added Successfully!").show();
@@ -77,9 +74,21 @@ public class AddBookPageController  {
                 new Alert(Alert.AlertType.ERROR,"Failed to add Book").show();
             }
 
+        } catch (NumberFormatException e) {
+
+            new Alert(
+                    Alert.AlertType.ERROR,
+                    "Please enter valid numbers for Year and Quantity!"
+            ).showAndWait();
+
         } catch (Exception e) {
+
             e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR,"Error"+e.getMessage()).show();
+
+            new Alert(
+                    Alert.AlertType.ERROR,
+                    "Error: " + e.getMessage()
+            ).showAndWait();
         }
         clearFields();
     }
@@ -95,7 +104,118 @@ public class AddBookPageController  {
         cmbCategory.setValue(null);
 
     }
-    public void initialize(){
+
+    public void searchBook(ActionEvent event) {
+
+//        Connection connection= DBConnection.getInstance().getConnection();
+//
+//        String sql="SELECT * FROM books WHERE book_id = ?;";
+//        try {
+//            PreparedStatement preparedStatement= connection.prepareStatement(sql);
+//            preparedStatement.setString(1,bookId);
+//            ResultSet resultSet= preparedStatement.executeQuery();
+//            if (resultSet.next()){
+//                txtAuthor.setText(resultSet.getString("author"));
+//                txtBookTitle.setText(resultSet.getString("book_title"));
+//                cmbCategory.setValue(resultSet.getString("category"));
+//                txtPublishedYear.setText(String.valueOf(resultSet.getInt("published_year")));
+//                txtQuantity.setText(String.valueOf(resultSet.getInt("quantity")));
+//
+//            }
+//
+//        } catch (SQLException e) {
+//
+//            e.printStackTrace();
+//        }
+        try {
+
+            Integer id = Integer.valueOf(txtBookId.getText().trim());
+            BookEntity bookEntity = service.searchBookDetails(id);
+            if (bookEntity != null) {
+                txtAuthor.setText(bookEntity.getAuthor());
+                txtBookTitle.setText(bookEntity.getTitle());
+                cmbCategory.setValue(bookEntity.getCategory());
+                txtQuantity.setText(String.valueOf(bookEntity.getQuantity()));
+                txtPublishedYear.setText(String.valueOf(bookEntity.getYear()));
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Book Not Found!").showAndWait();
+            }
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.WARNING, "Invalid Book ID!").showAndWait();
+        }
+    }
+
+    public void UpdateOnAction(ActionEvent actionEvent) {
+
+        if (txtAuthor.getText().trim().isBlank()
+                || txtBookTitle.getText().trim().isBlank()
+                || cmbCategory.getValue() == null
+                || txtQuantity.getText().trim().isBlank()
+                || txtPublishedYear.getText().trim().isBlank()) {
+
+            new Alert(
+                    Alert.AlertType.WARNING,
+                    "Please fill all fields!"
+            ).showAndWait();
+
+            return;
+        }
+
+        try {
+
+            BookDTO book = new BookDTO();
+            book.setBookid(txtBookId.getText().trim());
+            book.setAuthor(txtAuthor.getText().trim());
+            book.setTitle(txtBookTitle.getText().trim());
+            book.setCategory(cmbCategory.getValue());
+            book.setYear(Integer.valueOf(txtPublishedYear.getText().trim()));
+            book.setQuantity(Integer.valueOf(txtQuantity.getText().trim()));
+
+            boolean isUpdated = service.updateBookdetails(book);
+
+            if (isUpdated) {
+                new Alert(
+                        Alert.AlertType.INFORMATION,
+                        "Updated Book Successfully!"
+                ).showAndWait();
+
+                clearFields();
+
+            } else {
+                new Alert(
+                        Alert.AlertType.ERROR,
+                        "Failed to update Book!"
+                ).showAndWait();
+            }
+
+        } catch (NumberFormatException e) {
+
+            new Alert(
+                    Alert.AlertType.ERROR,
+                    "Please enter valid numbers for Year and Quantity!"
+            ).showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void DeleteOnAction(ActionEvent actionEvent) {
+       String id=txtBookId.getText().trim();
+
+      boolean isDeleted= service.deleteBook(Integer.valueOf(id));
+      if (isDeleted){
+          new Alert(Alert.AlertType.INFORMATION,"Delete Book Successfully!").show();
+
+      }else {
+          new Alert(Alert.AlertType.ERROR,"Failed to delete Book!").show();
+      }
+     clearFields();
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         cmbCategory.getItems().addAll(
                 "Fiction",
                 "Non-Fiction",
@@ -116,95 +236,8 @@ public class AddBookPageController  {
                 "Literature",
                 "Reference"
         );
-        txtBookId.textProperty().addListener(
-                (observableValue, oldValue, newValue) ->{
-                    if (newValue==null||newValue.trim().isEmpty()){
-                       clearFields();
-                    }
-                    else{
-                     loadBookDetails(newValue.trim());
-
-
-                    }
-                }
-        );
+        txtBookId.setOnAction(event -> searchBook(event));
     }
-    public void loadBookDetails(String bookId) {
-        Connection connection= DBConnection.getInstance().getConnection();
-
-        String sql="SELECT * FROM books WHERE book_id = ?;";
-        try {
-            PreparedStatement preparedStatement= connection.prepareStatement(sql);
-            preparedStatement.setString(1,bookId);
-            ResultSet resultSet= preparedStatement.executeQuery();
-            if (resultSet.next()){
-                txtAuthor.setText(resultSet.getString("author"));
-                txtBookTitle.setText(resultSet.getString("book_title"));
-                cmbCategory.setValue(resultSet.getString("category"));
-                txtPublishedYear.setText(String.valueOf(resultSet.getInt("published_year")));
-                txtQuantity.setText(String.valueOf(resultSet.getInt("quantity")));
-
-            }
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-        }
-    }
-    public void UpdateOnAction(ActionEvent actionEvent) {
-
-        String id=txtBookId.getText().trim();
-        String author=txtAuthor.getText().trim();
-        String category=cmbCategory.getValue().trim();
-        String title=txtBookTitle.getText().trim();
-        String year=txtPublishedYear.getText().trim();
-        String Quantity=txtQuantity.getText().trim();
-        if (author.isBlank()
-                || title.isBlank()
-                || category == null
-                || year.isBlank()
-                || Quantity.isBlank()) {
-
-            new Alert(
-                    Alert.AlertType.WARNING,
-                    "Please fill all fields!"
-            ).showAndWait();
-
-            return;
-        }
-            int published_year=Integer.parseInt(year);
-            int quantity=Integer.parseInt(Quantity);
-       boolean isUpdated= addBookController.updateBook(id,author,category,title,published_year,quantity);
-       if (isUpdated){
-           new Alert(Alert.AlertType.INFORMATION,"Updated Book Successfully!").show();
-
-       }
-       else {
-           new Alert(Alert.AlertType.ERROR,"Failed to update Book!").show();
-       }
-       clearFields();
-
-    }
-
-    public void DeleteOnAction(ActionEvent actionEvent) {
-       String id=txtBookId.getText().trim();
-
-      boolean isDeleted= addBookController.deleteBooks(id);
-      if (isDeleted){
-          new Alert(Alert.AlertType.INFORMATION,"Delete Book Successfully!").show();
-
-      }else {
-          new Alert(Alert.AlertType.ERROR,"Failed to delete Book!").show();
-      }
-     clearFields();
-    }
-
-
-
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//
-//    }
 }
 
 

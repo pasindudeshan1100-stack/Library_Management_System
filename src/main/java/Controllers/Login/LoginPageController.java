@@ -1,7 +1,8 @@
-
 package Controllers.Login;
 
 import Scene.SceneManager;
+import Service.LoginService;
+import Service.LoginServiceImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -13,7 +14,7 @@ import java.io.IOException;
 
 public class LoginPageController {
 
-    LoginController loginController = new LoginController();
+    LoginService service=new LoginServiceImpl();
 
     @FXML
     private TextField txtName;
@@ -42,9 +43,9 @@ public class LoginPageController {
             return;
         }
 
-        if (loginController.checkNameandPassword(username, password)) {
+        if (service.checkLoginDetails(txtName.getText(),txtPassword.getText())) {
 
-                SceneManager.switchPage("/view/Dashboard/home.fxml");
+            SceneManager.switchPage("/view/Dashboard/home.fxml");
 
 
         } else {
