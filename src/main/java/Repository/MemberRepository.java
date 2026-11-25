@@ -1,6 +1,5 @@
 package Repository;
 
-import Entity.BookEntity;
 import Entity.MemberEntity;
 import Hibernate.HibernateUtil;
 import Model.MemberDTO;
@@ -64,6 +63,15 @@ public class MemberRepository {
             return  false;
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+    public MemberEntity searchMember(Integer id){
+        try {
+            return session.find(MemberEntity.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+
         }
     }
 }

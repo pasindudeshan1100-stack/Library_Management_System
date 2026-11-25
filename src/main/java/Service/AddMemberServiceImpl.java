@@ -1,6 +1,7 @@
 package Service;
 
 import Entity.BookEntity;
+import Entity.MemberEntity;
 import Hibernate.HibernateUtil;
 import Model.MemberDTO;
 import Repository.MemberRepository;
@@ -110,8 +111,8 @@ public class AddMemberServiceImpl implements AddMemberService {
     }
 
     @Override
-    public BookEntity searchMemberDetails(Integer id) {
-        return null;
+    public MemberEntity searchMemberDetails(Integer id) {
+        return memberRepository.searchMember(id);
     }
 
     @Override
